@@ -1,0 +1,33 @@
+{
+  "name": "tap-academy-attendance-backend",
+  "version": "1.0.0",
+  "description": "Employee Attendance System backend",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/database/seeders/seed.js",
+    "cleanup:demo": "node src/database/seeders/cleanup-demo-data.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "json2csv": "^5.0.7",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.11.0",
+    "morgan": "^1.10.0",
+    "node-cron": "^3.0.3",
+    "winston": "^3.11.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
