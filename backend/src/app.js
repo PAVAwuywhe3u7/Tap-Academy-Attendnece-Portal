@@ -12,6 +12,9 @@ const app = express();
 const normalizeOrigin = (value) => String(value || '').trim().replace(/\/+$/, '').toLowerCase();
 const configuredOrigins = (env.cors.origins || []).map(normalizeOrigin);
 
+// Respect reverse proxy headers (Render/Vercel/NGINX) so rate limit uses real client IP.
+app.set('trust proxy', 1);
+
 app.use(helmet());
 app.use(
   cors({
