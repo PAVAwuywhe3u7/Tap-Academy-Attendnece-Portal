@@ -9,17 +9,28 @@ const { notFoundHandler, errorHandler } = require('./middlewares/error.middlewar
 const { apiLimiter } = require('./middlewares/rateLimiter.middleware');
 
 const app = express();
+const normalizeOrigin = (value) => String(value || '').trim().replace(/\/+$/, '').toLowerCase();
+const configuredOrigins = (env.cors.origins || []).map(normalizeOrigin);
 
 app.use(helmet());
 app.use(
   cors({
     origin(origin, callback) {
+      if (env.nodeEnv !== 'production') {
+        callback(null, true);
+        return;
+      }
+
       if (!origin) {
         callback(null, true);
         return;
       }
 
-      callback(null, env.cors.origins.includes(origin));
+      const normalizedOrigin = normalizeOrigin(origin);
+      const isConfigured = configuredOrigins.includes(normalizedOrigin);
+      const isVercelDomain = normalizedOrigin.endsWith('.vercel.app');
+
+      callback(null, isConfigured || isVercelDomain);
     },
     credentials: true
   })
