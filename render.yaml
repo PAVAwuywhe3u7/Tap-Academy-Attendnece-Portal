@@ -27,3 +27,13 @@ services:
         value: info
       - key: SKIP_RATE_LIMIT
         value: false
+      - key: MONGODB_CONNECT_RETRIES
+        value: 3
+      - key: MONGODB_CONNECT_RETRY_DELAY_MS
+        value: 1000
+      - key: MONGODB_SERVER_SELECTION_TIMEOUT_MS
+        value: 10000
+      - key: MONGODB_CONNECT_TIMEOUT_MS
+        value: 10000
+      - key: MONGODB_SOCKET_TIMEOUT_MS
+        value: 120000

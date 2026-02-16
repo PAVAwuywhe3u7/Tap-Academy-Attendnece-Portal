@@ -199,7 +199,12 @@ Screenshots are stored in the root `Screenshots/` folder:
 `JWT_EXPIRES_IN=7d`  
 `APP_TIMEZONE=UTC`  
 `LOG_LEVEL=info`  
-`SKIP_RATE_LIMIT=false`
+`SKIP_RATE_LIMIT=false`  
+`MONGODB_CONNECT_RETRIES=3`  
+`MONGODB_CONNECT_RETRY_DELAY_MS=1000`  
+`MONGODB_SERVER_SELECTION_TIMEOUT_MS=10000`  
+`MONGODB_CONNECT_TIMEOUT_MS=10000`  
+`MONGODB_SOCKET_TIMEOUT_MS=120000`
 5. After frontend deployment (step 2), set:
 `FRONTEND_URLS=https://<your-vercel-domain>`
 6. Verify backend health endpoint:
