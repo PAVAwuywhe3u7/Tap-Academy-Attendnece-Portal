@@ -4,6 +4,13 @@ const dotenv = require('dotenv');
 const envPath = path.resolve(process.cwd(), '.env');
 dotenv.config({ path: envPath });
 
+const parseCsv = (value) =>
+  String(value || '')
+    .split(',')
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+const frontendOrigins = parseCsv(process.env.FRONTEND_URLS);
+
 // Validate required environment variables
 const requiredEnvVars = ['MONGODB_URI', 'JWT_SECRET'];
 const missingVars = requiredEnvVars.filter((varName) => !process.env[varName]);
@@ -32,7 +39,9 @@ const env = {
     expiresIn: process.env.JWT_EXPIRES_IN || '7d'
   },
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173'
+    origins: frontendOrigins.length
+      ? frontendOrigins
+      : parseCsv(process.env.FRONTEND_URL || 'http://localhost:5173')
   },
   logging: {
     level: process.env.LOG_LEVEL || 'info'

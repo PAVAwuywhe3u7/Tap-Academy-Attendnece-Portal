@@ -78,6 +78,7 @@ MONGODB_DB_NAME=attendance_system
 JWT_SECRET=super_secret_key_change_me
 JWT_EXPIRES_IN=7d
 FRONTEND_URL=http://localhost:5173
+FRONTEND_URLS=http://localhost:5173
 APP_TIMEZONE=UTC
 SEED_FAKE_ATTENDANCE=false
 ```
@@ -182,23 +183,47 @@ Screenshots are stored in the root `Screenshots/` folder:
 - `Screenshots/Manager/Employee Attendance System Attendence Report.png`
 - `Screenshots/Mango DB/Mongo db-overview.png`
 
-## Deployment
+## Deployment (Vercel + Render)
 
-### Backend (Render/Railway/Fly)
-1. Deploy `backend/` as a Node.js service.
-2. Set environment variables from `backend/.env.example`.
-3. Set `NODE_ENV=production`.
-4. Use start command: `npm run start`.
-5. Ensure MongoDB Atlas network access allows your hosting provider.
+### 1. Deploy Backend on Render
+1. In Render, create a new **Web Service** from this GitHub repo.
+2. Select `backend` as the **Root Directory**.
+3. Set:
+`Build Command`: `npm install`  
+`Start Command`: `npm run start`
+4. Set backend environment variables:
+`NODE_ENV=production`  
+`MONGODB_URI=<your-mongodb-atlas-uri>`  
+`MONGODB_DB_NAME=attendance_system`  
+`JWT_SECRET=<strong-secret>`  
+`JWT_EXPIRES_IN=7d`  
+`APP_TIMEZONE=UTC`  
+`LOG_LEVEL=info`  
+`SKIP_RATE_LIMIT=false`
+5. After frontend deployment (step 2), set:
+`FRONTEND_URLS=https://<your-vercel-domain>`
+6. Verify backend health endpoint:
+`https://<your-render-domain>/api/health`
 
-### Frontend (Vercel/Netlify)
-1. Deploy `frontend/` as a Vite app.
-2. Set `VITE_API_URL=https://<your-backend-domain>/api`.
-3. Build command: `npm run build`.
-4. Publish directory: `dist`.
+This repository includes a `render.yaml` blueprint for the same setup.
 
-### CORS
-Set `FRONTEND_URL` in backend environment to your deployed frontend URL.
+### 2. Deploy Frontend on Vercel
+1. In Vercel, import this GitHub repo.
+2. Set **Root Directory** to `frontend`.
+3. Keep defaults for a Vite project:
+`Build Command`: `npm run build`  
+`Output Directory`: `dist`
+4. Set frontend environment variable:
+`VITE_API_URL=https://<your-render-domain>/api`
+5. Deploy.  
+This repository includes `frontend/vercel.json` for SPA route rewrites.
+
+### 3. Final CORS Wiring
+1. Copy the Vercel production URL.
+2. In Render backend env vars, set `FRONTEND_URLS` to that URL.
+3. If you use multiple frontend domains, set comma-separated values:
+`FRONTEND_URLS=https://app.example.com,https://staging.example.com`
+4. Redeploy backend after changing env vars.
 
 ## Business Rules
 
