@@ -52,7 +52,7 @@ const ReportsPage = () => {
     const params = {
       from: filters.from,
       to: filters.to,
-      format: 'xlsx'
+      format: 'csv'
     };
 
     if (filters.employeeId) params.employeeId = filters.employeeId;
@@ -60,7 +60,7 @@ const ReportsPage = () => {
     if (filters.status) params.status = filters.status;
 
     const response = await exportAttendanceApi(params);
-    downloadBlob(response.data, `attendance-report-${dayjs().format('YYYY-MM-DD')}.xlsx`);
+    downloadBlob(response.data, `attendance-report-${dayjs().format('YYYY-MM-DD')}.csv`);
   };
 
   return (
@@ -136,7 +136,7 @@ const ReportsPage = () => {
 
           <div className="flex items-end gap-2">
             <button className="btn-gradient w-full" type="button" onClick={onExport}>
-              Export Excel
+              Export CSV
             </button>
           </div>
         </div>

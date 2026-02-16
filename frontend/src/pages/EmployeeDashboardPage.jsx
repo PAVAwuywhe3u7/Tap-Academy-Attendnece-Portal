@@ -45,7 +45,8 @@ const EmployeeDashboardPage = () => {
   return (
     <AppLayout role={user?.role}>
       {employeeDashboard ? (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          <LoadingSkeleton className="h-36" />
           <LoadingSkeleton className="h-36" />
           <LoadingSkeleton className="h-36" />
           <LoadingSkeleton className="h-36" />
@@ -53,7 +54,7 @@ const EmployeeDashboardPage = () => {
         </div>
       ) : (
         <>
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             <StatCard
               title="Today Status"
               value={today?.status === 'half-day' ? 0.5 : today?.status === 'present' || today?.status === 'late' ? 1 : 0}
@@ -61,6 +62,7 @@ const EmployeeDashboardPage = () => {
               icon="?"
             />
             <StatCard title="Present (Month)" value={summary?.statusSummary?.present || 0} hint="Includes full day entries" icon="?" />
+            <StatCard title="Absent (Month)" value={summary?.statusSummary?.absent || 0} hint="No attendance entries" icon="?" />
             <StatCard title="Late (Month)" value={summary?.statusSummary?.late || 0} hint="After 9:30 AM" icon="?" />
             <StatCard title="Total Hours" value={summary?.totalHours || 0} hint="Current month" icon="?" />
           </div>
